@@ -78,6 +78,14 @@
   margin-bottom: 12px;
 }
 
+.restaurants-section .message-hint a {
+  color: var(--notion-accent);
+  text-decoration: none;
+}
+.restaurants-section .message-hint a:hover {
+  text-decoration: underline;
+}
+
 .restaurant-list {
   list-style: none;
   padding: 0;

@@ -52,7 +52,16 @@ export default function Result({ winner, baseOptions, onAgain }) {
     )
       .then(({ data }) => {
         setRestaurants(data.restaurants || []);
-        setMessage(data.message || '');
+        if (data.apiKeyMissing) {
+          const isRender = typeof window !== 'undefined' && window.location.hostname.includes('onrender.com');
+          setMessage(
+            isRender
+              ? '카카오 REST API 키가 설정되지 않았어요. Render 대시보드 → 이 서비스 선택 → Environment → KAKAO_REST_API_KEY 변수를 추가한 뒤 저장(재배포)해 주세요.'
+              : '음식점 추천을 쓰려면 server 폴더의 .env 파일에 KAKAO_REST_API_KEY=발급받은키 를 넣고 서버를 재시작해 주세요.'
+          );
+        } else {
+          setMessage(data.message || '');
+        }
       })
       .catch(() => {
         setRestaurants([]);
@@ -89,8 +98,18 @@ export default function Result({ winner, baseOptions, onAgain }) {
         <h2>📍 내 주변 추천 음식점 (최대 5곳)</h2>
         {locationError && <p className="location-error">{locationError}</p>}
         {!location && !locationError && <p>위치 확인 중…</p>}
-        {message && <p className="message">{message}</p>}
-        {loading && restaurants.length === 0 && <p>검색 중…</p>}
+        {message && (
+          <p className="message restaurants-message">
+            {message}
+            {(message.includes('KAKAO') || message.includes('API 키')) && (
+              <span className="message-hint">
+                {' '}
+                <a href="https://developers.kakao.com" target="_blank" rel="noopener noreferrer">카카오 개발자 사이트</a>에서 REST API 키를 발급받을 수 있어요.
+              </span>
+            )}
+          </p>
+        )}
+        {loading && restaurants.length === 0 && !message && <p>검색 중…</p>}
         <ul className="restaurant-list">
           {restaurants.map((r) => (
             <li key={r.id} className="restaurant-card">

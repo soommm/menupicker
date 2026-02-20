@@ -104,44 +104,246 @@ npm run dev
 
 ## 🌐 배포 (다른 사용자 접속)
 
-### A) 정식 배포 — 다른 네트워크 사람도 접속 (인터넷 공개)
+---
 
-**Render.com**에 올리면 전 세계 어디서나 링크 하나로 접속할 수 있어요. (무료 플랜 가능)
+### 📖 처음 배포하시는 분을 위한 상세 가이드
 
-#### 1) GitHub에 코드 올리기
+**배포**란, “지금 내 컴퓨터에서만 보이던 서비스를 **인터넷에 올려서** 누구나 링크만 있으면 들어올 수 있게 하는 것”이에요.  
+아래는 기획자·비개발자도 따라 할 수 있도록 단계별로 풀어 쓴 설명이에요.
 
-- 이 프로젝트를 **GitHub 저장소**에 푸시해 두세요. (이미 올려 두었다면 생략)
+---
 
-#### 2) Render에서 서비스 만들기
+#### 배포가 끝나면 어떻게 되나요?
 
-1. [Render 대시보드](https://dashboard.render.com) 접속 후 로그인(또는 GitHub로 가입).
-2. **New +** → **Blueprint** 선택.
-3. **Connect a repository**에서 방금 올린 GitHub 저장소 연결.
-4. Render가 저장소 루트의 **`render.yaml`** 을 읽어 서비스를 자동 생성해요.
-5. **Apply** 후 배포가 끝날 때까지 기다리면, `https://이름.onrender.com` 형태의 주소가 나와요.
+- 친구·동료에게 **URL 하나**(예: `https://menupicker.onrender.com`)만 보내면,
+- **다른 Wi‑Fi, 다른 지역**에서도 그 링크를 열어 **방 만들기·입장·투표**를 할 수 있어요.
+- 우리가 쓰는 서비스는 **Render**라는 곳에서 “우리 코드를 받아서 24시간 돌려 주는 서버”를 빌려 쓰는 방식이에요. (무료 플랜으로 시작 가능)
 
-#### 3) 접속 주소 공유
+---
 
-- 배포가 끝나면 **서비스 URL**(예: `https://lunch-menu-vote.onrender.com`)을 친구·동료에게 공유하세요.
-- **다른 Wi‑Fi, 다른 지역**에서도 이 링크만 있으면 접속 가능해요.
+#### 1단계: GitHub에 코드 올리기 (푸시)
 
-#### 4) 참고
+**GitHub**는 “코드 저장소”라고 생각하면 돼요.  
+우리 프로젝트를 GitHub에 올려 두어야, Render가 그 코드를 가져가서 서버에서 실행할 수 있어요.
 
-- **Render 무료 플랜**: 일정 시간 사용이 없으면 서비스가 절전됩니다. 그 후 처음 접속 시 깨우는 데 30초 정도 걸릴 수 있어요.
-- **HTTPS**: Render가 자동으로 HTTPS 주소를 줘서, 링크 공유 시 그대로 쓰면 됩니다.
+**이 프로젝트의 저장소 주소:** https://github.com/soommm/menupicker
 
-#### 5) (선택) 음식점 추천용 카카오 API 키
+**할 일:**
 
-- Render 대시보드 → 해당 서비스 → **Environment** 탭에서 **Add Environment Variable**.
-- 키: `KAKAO_REST_API_KEY`, 값: 카카오 개발자 콘솔에서 발급한 REST API 키.
-- 없어도 **방 만들기·투표·결과**까지는 그대로 동작하고, 음식점 추천만 “API 키 필요”로 나와요.
+1. **터미널**을 엽니다.
+   - Mac: Spotlight(⌘ + 스페이스)에 “터미널” 또는 “Terminal” 검색 후 실행.
+   - Windows: “명령 프롬프트” 또는 “PowerShell” 실행.
+2. **프로젝트 폴더로 이동**합니다. (아래 경로는 본인 PC에 맞게 수정)
+   ```bash
+   cd /Users/soominpark/Desktop/260216_2_test
+   ```
+3. **한 줄 입력** 후 Enter:
+   ```bash
+   git push -u origin main
+   ```
+4. **“Authentication failed” 가 나오면** → 아래 **“🔑 GitHub 푸시 인증 (Authentication failed 해결)”** 섹션을 보고 **토큰**을 만들어 사용하세요. (GitHub는 예전처럼 비밀번호로 푸시할 수 없고, **토큰**만 허용해요.)
+5. `main` 브랜치가 성공적으로 푸시되었다는 메시지가 나오면 1단계 끝이에요.  
+   브라우저에서 https://github.com/soommm/menupicker 에 들어가 보면 방금 올린 코드가 보여요.
 
-#### 6) Railway로 배포하고 싶을 때
+---
 
-- [Railway](https://railway.app)에 가입 후 **New Project** → **Deploy from GitHub repo**로 이 저장소 연결.
+#### 2단계: Render 가입 및 서비스 만들기
+
+**Render**는 “코드를 받아서 웹 서비스로 24시간 돌려 주는 곳”이에요.  
+GitHub에 올린 코드를 Render가 가져가서, 누구나 접속할 수 있는 주소를 만들어 줍니다.
+
+**할 일:**
+
+1. **Render 사이트 접속**  
+   - https://dashboard.render.com 로 들어갑니다.
+2. **가입/로그인**  
+   - **Sign up** 또는 **Log in** 후, **“Sign in with GitHub”** 를 선택하는 것을 권장해요.  
+   - GitHub 계정으로 로그인하면, 나중에 “어느 GitHub 저장소를 배포할지” 고를 때 편해요.
+3. **새 서비스 만들기**  
+   - 로그인 후 화면에서 **“New +”** 버튼을 누릅니다.  
+   - 목록에서 **“Blueprint”** 를 선택합니다.  
+     (Blueprint = “이 프로젝트에 들어 있는 설정 파일을 읽어서 서비스를 자동으로 만들어 주는 방식”이에요.)
+4. **GitHub 저장소 연결**  
+   - **“Connect a repository”** 또는 **“Connect account”** 같은 버튼이 보이면, **GitHub**를 선택합니다.  
+   - GitHub 권한 요청이 나오면 **Authorize** 등으로 허용해 줍니다.  
+   - 연결된 계정의 저장소 목록에서 **“soommm/menupicker”** (또는 menupicker) 를 고릅니다.  
+   - **“Connect”** 또는 **“Use this repository”** 를 누릅니다.
+5. **설정 확인**  
+   - Render가 저장소 안의 **`render.yaml`** 파일을 읽어서,  
+     “어떤 명령으로 빌드하고, 어떤 명령으로 서버를 켤지”를 자동으로 채워 줍니다.  
+   - 별도로 수정하지 않아도 이 프로젝트는 그대로 사용 가능해요.
+6. **배포 시작**  
+   - **“Apply”** 또는 **“Create”** 를 누르면 배포가 시작됩니다.  
+   - 화면에 **“Building…”**, **“Deploying…”** 같은 진행 상태가 보여요.  
+   - **2~5분 정도** 기다리면 **“Live”** 또는 **“Your service is live”** 로 바뀝니다.
+7. **접속 주소 확인**  
+   - 상단이나 서비스 상세 화면에 **URL**이 보여요.  
+   - 예: `https://menupicker.onrender.com` 또는 `https://menupicker-xxxx.onrender.com`  
+   - 이 주소를 복사해 두세요.
+
+---
+
+#### 3단계: 접속 주소 공유하기
+
+- 배포가 **Live**가 되었다면, 복사한 **URL**을 친구·동료에게 보내기만 하면 됩니다.
+- 그 링크를 열면 **점심 메뉴 고르기** 화면이 나오고, 방 만들기·방 코드로 입장·투표가 모두 가능해요.
+- **다른 네트워크**(다른 Wi‑Fi, 다른 지역)에 있어도 같은 링크로 접속할 수 있어요.
+
+---
+
+#### 4단계: 알아두면 좋은 것들
+
+- **무료 플랜 (Free)**  
+  - Render 무료 플랜은 “한동안 접속이 없으면 서비스를 잠깐 멈춘다(절전)”는 특징이 있어요.  
+  - 그래서 **오래 만에 처음 링크를 열면** “깨우는” 동안 **30초~1분** 정도 걸릴 수 있어요.  
+  - 그 다음부터는 보통 빠르게 열려요.
+- **HTTPS**  
+  - Render가 만들어 주는 주소는 모두 **https://** 로 시작해요.  
+  - 주소 그대로 공유하면 되고, 따로 설정할 것은 없어요.
+- **음식점 추천(카카오 API)**  
+  - 음식점 추천까지 쓰고 싶다면, Render 대시보드에서 이 서비스 선택 → **Environment** 탭 → **Add Environment Variable** 에서  
+    키: `KAKAO_REST_API_KEY`, 값: (카카오 개발자 콘솔에서 발급한 REST API 키) 를 넣으면 됩니다.  
+  - 넣지 않아도 **방 만들기·투표·결과**까지는 그대로 동작하고, 음식점 추천만 “API 키 필요” 메시지로 나와요.
+
+---
+
+#### 🔑 GitHub 푸시 인증 (Authentication failed 해결)
+
+`fatal: Authentication failed for 'https://github.com/soommm/menupicker.git/'` 가 나오면 **Personal Access Token(토큰)**으로 인증해야 해요. (GitHub 로그인 비밀번호는 git 푸시에 쓰이지 않아요.)
+
+**1) 토큰 만들기**
+
+1. 브라우저에서 **https://github.com/settings/tokens** 로 들어가요.
+2. **Log in to GitHub** 이 나오면 soommm 계정으로 로그인해요.
+3. **“Generate new token”** → **“Generate new token (classic)”** 을 눌러요.
+4. **Note** 에는 아무 이름이나 넣어요. (예: `menupicker 푸시`)
+5. **Expiration** 은 **90 days** 또는 **No expiration** 중 하나를 골라요.
+6. **Select scopes** 에서 **repo** 에만 체크해요. (전체 repo 권한)
+7. 맨 아래 **“Generate token”** 을 누르면 **한 번만** 긴 문자열이 나와요. (예: `ghp_xxxxxxxxxxxx`)  
+   → **이걸 복사**해 두세요. 나중에 다시 볼 수 없어요.
+
+**2) 푸시할 때 토큰 쓰기**
+
+터미널에서 다시:
+
+```bash
+cd /Users/soominpark/Desktop/260216_2_test
+git push -u origin main
+```
+
+- **Username** 이 나오면: **soommm** (본인 GitHub 아이디) 입력 후 Enter.
+- **Password** 가 나오면: **방금 복사한 토큰**을 **그 자리에서** 붙여 넣어요 (Cmd+V).  
+  - ⚠️ 비밀번호처럼 **아무 글자도 안 보이는 게 정상**이에요. 그대로 Enter만 누르면 돼요.  
+  - ❌ **새 줄에 토큰을 입력하면 안 돼요.** 터미널이 그걸 명령어로 인식해서 `command not found` 에러가 나요. 반드시 "Password:" 나온 **그 입력 칸에** 붙여 넣기.
+
+**한 번에 주소에 넣고 싶다면** (매번 물어보지 않게):
+
+```bash
+git remote set-url origin https://soommm@github.com/soommm/menupicker.git
+git push -u origin main
+```
+
+- `Password for 'https://soommm@github.com':` 가 나오면 **토큰**을 붙여 넣어요.
+
+**⚠️ 토큰이 채팅·메시지에 노출됐다면**  
+GitHub → [Settings → Developer settings → Personal access tokens](https://github.com/settings/tokens) 에서 해당 토큰을 **Delete/Revoke** 하고, 새 토큰을 만들어서 사용하세요.
+
+---
+
+**🔄 또 실패할 때 (Password 입력해도 Invalid / Authentication failed)**
+
+Mac이 **예전에 잘못 입력한 비밀번호**를 기억하고 있을 수 있어요. 아래 순서대로 해 보세요.
+
+**방법 A) 캐시 지우고, 토큰을 URL에 넣어서 한 번만 푸시**
+
+1. **저장된 GitHub 비밀번호 지우기** (터미널에 그대로 복사해서 한 줄씩 실행)
+   ```bash
+   git credential-osxkeychain erase
+   ```
+   그 다음 **아래 3줄을 한꺼번에** 입력하고 Enter를 **두 번** 누르세요.
+   ```
+   host=github.com
+   protocol=https
+   ```
+   (두 번째 Enter 후 아무것도 안 나오면 정상이에요.)
+
+2. **새 토큰**을 GitHub에서 하나 만드세요.  
+   https://github.com/settings/tokens → Generate new token (classic) → **repo** 체크 → Generate token → **토큰 복사**.
+
+3. **아래 한 줄**을 터미널에 넣되, **`여기에새토큰붙여넣기`** 자리에 방금 복사한 토큰을 붙여 넣은 뒤 실행해요.
+   ```bash
+   git remote set-url origin https://soommm:여기에새토큰붙여넣기@github.com/soommm/menupicker.git
+   ```
+   예: 토큰이 `ghp_abc123` 이라면  
+   `git remote set-url origin https://soommm:ghp_abc123@github.com/soommm/menupicker.git`
+
+4. **푸시**
+   ```bash
+   cd /Users/soominpark/Desktop/260216_2_test
+   git push -u origin main
+   ```
+   이번에는 비밀번호를 묻지 않고 푸시될 거예요.
+
+5. **보안을 위해** 푸시가 끝나면 주소에서 토큰을 다시 빼 두세요. (다음 푸시 때 다시 묻거나, 아래 방법 B 사용)
+   ```bash
+   git remote set-url origin https://github.com/soommm/menupicker.git
+   ```
+
+**방법 B) GitHub CLI로 로그인 (가장 수월할 수 있음)**
+
+1. **GitHub CLI 설치**  
+   - https://cli.github.com/ 에서 Mac용 설치 파일 받아서 설치하거나,  
+   - 터미널에서: `brew install gh` (Homebrew가 있을 때)
+
+2. **로그인**
+   ```bash
+   gh auth login
+   ```
+   - GitHub.com 선택 → HTTPS 선택 → Login with a web browser 선택  
+   - 나오는 **코드**를 복사하고, 브라우저에서 열리는 페이지에 **코드 입력** → Authorize
+
+3. **그 다음 푸시**
+   ```bash
+   cd /Users/soominpark/Desktop/260216_2_test
+   git push -u origin main
+   ```
+   이제 인증 없이 푸시될 수 있어요.
+
+이렇게 하면 Authentication failed 없이 푸시될 거예요.
+
+---
+
+#### 5단계: 문제가 생겼을 때
+
+| 상황 | 확인할 것 |
+|------|------------|
+| `Authentication failed` / `git push` 로그인 실패 | 위 **🔑 GitHub 푸시 인증** 대로 **Personal Access Token** 만들고, Password 자리에 **토큰** 입력. |
+| `git push` 할 때 “권한 없음” | GitHub 계정이 이 저장소(soommm/menupicker) 소유자인지, 토큰에 **repo** 권한이 있는지 확인. |
+| Render에서 저장소가 안 보여요 | “Sign in with GitHub”로 로그인했는지, GitHub 권한 허용을 했는지 확인. |
+| 배포가 실패해요 (Failed) | Render 대시보드의 **Logs** 탭에서 빨간색 에러 메시지를 확인. 대부분 “빌드/시작 명령” 문제이면 `render.yaml` 설정을 함께 보면 됩니다. |
+| 링크를 열었는데 한참 동안 하얀 화면 / 로딩만 돼요 | 무료 플랜 절전일 수 있어요. 30초~1분 기다려 보세요. |
+
+---
+
+### A) 정식 배포 요약 (이미 익숙한 분용)
+
+**Render.com**에 올리면 전 세계 어디서나 링크 하나로 접속 가능. (무료 플랜 가능)
+
+1. **GitHub 푸시**  
+   - 저장소: https://github.com/soommm/menupicker  
+   - `git push -u origin main` (한 번만 실행).
+2. **Render**  
+   - [dashboard.render.com](https://dashboard.render.com) → New + → Blueprint → 저장소 **soommm/menupicker** 연결 → Apply.
+3. **접속 주소**  
+   - Live 되면 나오는 URL(예: `https://menupicker.onrender.com`)을 공유.
+4. **(선택)** 카카오 API: 서비스 → Environment → `KAKAO_REST_API_KEY` 추가.
+
+#### Railway로 배포하고 싶을 때
+
+- [Railway](https://railway.app) 가입 후 **New Project** → **Deploy from GitHub repo** → 이 저장소 연결.
 - **Build Command**: `npm run install:all && npm run build`
 - **Start Command**: `npm run start:prod`
-- **Root Directory**: 저장소 루트 그대로 두면 돼요. 배포 후 생성된 URL로 접속하면 됩니다.
+- **Root Directory**: 저장소 루트 그대로.
 
 ---
 

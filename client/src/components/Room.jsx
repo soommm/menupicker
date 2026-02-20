@@ -18,6 +18,15 @@ export default function Room({ roomId, userName, initialRoom, onShowResult, onLe
   const [room, setRoom] = useState(initialRoom || null);
   const [socket, setSocket] = useState(null);
   const [myVote, setMyVote] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  const copyRoomCode = () => {
+    if (!roomId) return;
+    navigator.clipboard.writeText(roomId).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   useEffect(() => {
     const s = io(SOCKET_URL, { path: '/socket.io', transports: ['websocket', 'polling'] });
@@ -81,7 +90,17 @@ export default function Room({ roomId, userName, initialRoom, onShowResult, onLe
   return (
     <div className="room">
       <div className="room-header">
-        <span className="room-code">방 코드: <strong>{roomId}</strong></span>
+        <button
+          type="button"
+          className={`room-code-copy ${copied ? 'room-code-copy--copied' : ''}`}
+          onClick={copyRoomCode}
+          onFocus={copyRoomCode}
+          tabIndex={0}
+          title="탭 또는 클릭 시 방 코드 복사"
+        >
+          <span className="room-code">방 코드: <strong>{roomId}</strong></span>
+          {copied && <span className="room-code-copy-feedback">복사됨</span>}
+        </button>
         <span className="participants">👥 {room.participants}명</span>
         <button type="button" className="btn ghost small" onClick={onLeave}>나가기</button>
       </div>

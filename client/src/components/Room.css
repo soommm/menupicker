@@ -16,11 +16,34 @@
   box-shadow: var(--notion-shadow-sm);
 }
 
+.room-code-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  margin: -4px -8px;
+  border: none;
+  border-radius: var(--notion-radius);
+  background: transparent;
+  cursor: pointer;
+  font-size: inherit;
+  color: inherit;
+  transition: background 0.12s ease;
+}
+.room-code-copy:hover,
+.room-code-copy:focus {
+  background: var(--notion-bg-hover);
+  outline: none;
+}
+.room-code-copy-feedback {
+  font-size: 12px;
+  color: var(--notion-accent);
+  font-weight: 500;
+}
 .room-code {
   font-size: 14px;
   color: var(--notion-text-secondary);
 }
-
 .room-code strong {
   color: var(--notion-text);
   font-weight: 600;

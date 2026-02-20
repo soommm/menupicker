@@ -39,8 +39,26 @@ export default function App() {
     setBaseOptions(null);
   };
 
+  const showHeader = screen === 'room' || screen === 'result';
+
   return (
     <div className={`app${screen === 'home' ? ' app--home' : ''}`}>
+      {showHeader && (
+        <header className="app-header">
+          <div className="app-header-inner">
+            <button type="button" className="app-header-btn app-header-back" onClick={goHome} aria-label="뒤로 가기">
+              <span className="app-header-icon" aria-hidden>&lt;</span>
+            </button>
+            <span className="app-header-spacer" />
+            <button type="button" className="app-header-btn app-header-home" onClick={goHome} aria-label="홈">
+              <svg className="app-header-icon app-header-icon--home" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </button>
+          </div>
+        </header>
+      )}
       {screen === 'home' && (
         <Home
           onJoinRoom={goToRoom}

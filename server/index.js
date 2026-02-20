@@ -6,8 +6,8 @@
  * 2. 선정된 메뉴로 내 위치 기반 음식점 3~5곳 추천 (카카오 API)
  */
 
-require('dotenv').config();
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const fs = require('fs');
 const express = require('express');
 const http = require('http');
@@ -221,10 +221,11 @@ app.get('/api/restaurants', async (req, res) => {
   const { lat, lng, keyword } = req.query;
   const apiKey = process.env.KAKAO_REST_API_KEY;
 
-  if (!apiKey) {
+  if (!apiKey || apiKey.trim() === '' || apiKey.includes('여기에') || apiKey.includes('붙여넣기')) {
     return res.json({
       ok: false,
-      message: '음식점 검색을 쓰려면 server 폴더에 .env 파일을 만들고 KAKAO_REST_API_KEY=발급받은키 를 넣어주세요.',
+      apiKeyMissing: true,
+      message: '음식점 추천을 쓰려면 카카오 REST API 키가 필요해요.',
       restaurants: []
     });
   }
@@ -241,9 +242,17 @@ app.get('/api/restaurants', async (req, res) => {
     const query = encodeURIComponent(keyword);
     const url = `https://dapi.kakao.com/v2/local/search/keyword.json?query=${query}&x=${lng}&y=${lat}&radius=2000&size=5&sort=distance`;
     const resp = await fetch(url, {
-      headers: { Authorization: `KakaoAK ${apiKey}` }
+      headers: { Authorization: `KakaoAK ${apiKey.trim()}` }
     });
     const data = await resp.json();
+
+    if (!resp.ok) {
+      return res.json({
+        ok: false,
+        message: '카카오 API 요청이 거절됐어요. REST API 키 확인·카카오맵 사용 설정(ON)을 확인해 주세요.',
+        restaurants: []
+      });
+    }
 
     if (data.meta?.total_count === 0 || !data.documents?.length) {
       return res.json({
