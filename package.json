@@ -1,0 +1,19 @@
+{
+  "name": "lunch-menu-vote",
+  "private": true,
+  "description": "카훗 스타일 점심 메뉴 고르기 (실시간 투표 + 위치 기반 음식점 추천)",
+  "scripts": {
+    "dev": "cd client && npm run dev",
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev",
+    "dev:all": "npx concurrently -n server,client \"npm run server\" \"npm run client\"",
+    "start": "node scripts/start-all.js",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm run build",
+    "deploy": "npm run build && cd server && node index.js",
+    "start:prod": "node server/index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

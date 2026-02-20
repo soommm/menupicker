@@ -1,0 +1,102 @@
+/* 노션 디자인 시스템 참고: 중립 색상, 여백, 작은 라운드, Inter */
+:root {
+  --notion-text: #37352f;
+  --notion-text-secondary: #6b6b6b;
+  --notion-text-tertiary: #9b9a97;
+  --notion-bg: #ffffff;
+  --notion-bg-hover: #f7f6f3;
+  --notion-bg-secondary: #f7f6f3;
+  --notion-border: rgba(55, 53, 47, 0.09);
+  --notion-border-strong: rgba(55, 53, 47, 0.16);
+  --notion-radius: 4px;
+  --notion-radius-lg: 8px;
+  --notion-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --notion-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --notion-accent: #2383e2;
+  --notion-accent-hover: #0d6bce;
+  --notion-primary: #37352f;
+  --notion-primary-hover: #2f2d28;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  background: var(--notion-bg-secondary);
+  min-height: 100vh;
+  color: var(--notion-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.app--home {
+  background: #FBF9F6;
+  min-height: 100vh;
+  margin: -24px;
+  padding: 24px;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input,
+select {
+  font-family: inherit;
+}
+
+/* 공통 버튼 - 노션 스타일 */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--notion-radius);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.12s ease;
+}
+.btn.primary {
+  background: var(--notion-primary);
+  color: #fff;
+}
+.btn.primary:hover {
+  background: var(--notion-primary-hover);
+}
+.btn.secondary {
+  background: var(--notion-bg);
+  color: var(--notion-text);
+  border: 1px solid var(--notion-border-strong);
+}
+.btn.secondary:hover {
+  background: var(--notion-bg-hover);
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--notion-text-secondary);
+}
+.btn.ghost:hover {
+  background: var(--notion-bg-hover);
+}
+.btn.text {
+  background: none;
+  border: none;
+  color: var(--notion-text-tertiary);
+  font-weight: 400;
+  padding: 8px 12px;
+}
+.btn.text:hover {
+  color: var(--notion-text-secondary);
+}
+.btn.small {
+  padding: 6px 12px;
+  font-size: 13px;
+}

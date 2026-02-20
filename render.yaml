@@ -1,0 +1,18 @@
+# Render.com 정식 배포 설정 (다른 네트워크 사용자 접속)
+# 사용법: GitHub에 푸시 후 https://dashboard.render.com 에서
+# "New" → "Blueprint" 선택 후 이 저장소 연결하면 자동으로 서비스 생성됨
+
+services:
+  - type: web
+    name: lunch-menu-vote
+    runtime: node
+    plan: free
+
+    # 빌드: 의존성 설치(루트+서버+클라이언트) 후 클라이언트 빌드
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm run start:prod
+
+    # 음식점 추천(카카오 API) 사용 시 대시보드에서 추가
+    # envVars:
+    #   - key: KAKAO_REST_API_KEY
+    #     sync: false

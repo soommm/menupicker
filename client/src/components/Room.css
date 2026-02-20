@@ -1,0 +1,155 @@
+.room {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.room-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: var(--notion-bg);
+  border-radius: var(--notion-radius-lg);
+  border: 1px solid var(--notion-border);
+  box-shadow: var(--notion-shadow-sm);
+}
+
+.room-code {
+  font-size: 14px;
+  color: var(--notion-text-secondary);
+}
+
+.room-code strong {
+  color: var(--notion-text);
+  font-weight: 600;
+}
+
+.participants {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--notion-text-secondary);
+}
+
+.room-base-options {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--notion-bg-secondary);
+  border-radius: var(--notion-radius);
+  border: 1px solid var(--notion-border);
+}
+
+.room-base-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--notion-text-secondary);
+  margin-right: 8px;
+}
+
+.room-base-options ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 14px;
+  color: var(--notion-text-secondary);
+}
+
+.room-base-options li {
+  margin-bottom: 4px;
+}
+
+.room h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--notion-text);
+  margin-bottom: 4px;
+}
+
+.room .hint {
+  font-size: 14px;
+  color: var(--notion-text-secondary);
+  margin-bottom: 16px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.menu-card {
+  padding: 16px;
+  background: var(--notion-bg);
+  border: 1px solid var(--notion-border);
+  border-radius: var(--notion-radius);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.menu-card .menu-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.menu-card:hover {
+  background: var(--notion-bg-hover);
+  border-color: var(--notion-border-strong);
+}
+
+.menu-card.voted {
+  background: rgba(35, 131, 226, 0.08);
+  border-color: var(--notion-accent);
+  color: var(--notion-text);
+}
+
+.menu-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--notion-text);
+}
+
+.vote-count {
+  font-size: 13px;
+  color: var(--notion-text-secondary);
+}
+
+.menu-card.voted .vote-count {
+  color: var(--notion-accent);
+}
+
+.room-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.room-actions .btn.primary {
+  padding: 10px 24px;
+  font-size: 14px;
+}
+
+.share-link {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--notion-bg-secondary);
+  border-radius: var(--notion-radius);
+  border: 1px solid var(--notion-border);
+  font-size: 13px;
+  color: var(--notion-text-secondary);
+  word-break: break-all;
+}
+
+.share-link a {
+  color: var(--notion-accent);
+  text-decoration: none;
+}
+
+.share-link a:hover {
+  text-decoration: underline;
+}

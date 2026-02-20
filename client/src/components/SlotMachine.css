@@ -1,0 +1,60 @@
+.slot-machine {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.slot-machine__reels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.slot-machine__reel {
+  background: #fff;
+  border: 1px solid rgba(55, 53, 47, 0.09);
+  border-radius: 12px;
+  padding: 30px 12px;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.slot-machine__reel.reel-stopped {
+  animation: slot-tak 0.2s ease;
+}
+
+@keyframes slot-tak {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(55, 53, 47, 0);
+  }
+  40% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 3px var(--notion-border-strong);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(55, 53, 47, 0);
+  }
+}
+
+.slot-machine__emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.slot-machine__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--notion-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
